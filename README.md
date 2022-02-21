@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://dev.to/vumdao">
-    <img alt="Searching Best Movies With AWS Opensearch" src="images/cover.png" width="800" />
+    <img alt="Searching Best Movies With AWS Opensearch" src="docs/images/cover.png" width="800" />
   </a>
 </p>
 <h1 align="center">
@@ -124,7 +124,7 @@ You need to pay standard AWS data transfer charges for the data transferred in a
 
 ## 🚀 **Infra Overview** <a name="Infra-Overview"></a>
 
-<img src="images/flow.png" width=1100 />
+<img src="docs/images/flow.png" width=1100 />
 
 
 ## 🚀 **Create Opensearch Domain** <a name="Create-Opensearch-Domain"></a>
@@ -144,11 +144,11 @@ You need to pay standard AWS data transfer charges for the data transferred in a
 
 </details>
 
-<img src="images/os-domain.png" width=1100 />
+<img src="docs/images/os-domain.png" width=1100 />
 
 ## 🚀 **Create Cognito userpool using Amplify** <a name="Create-Cognito-userpool-using-Amplify"></a>
 
-<img src="images/authen.png" width=1100 />
+<img src="docs/images/authen.png" width=1100 />
 
 ## 🚀 **Create lambda function to query opensearch domain** <a name="Create-lambda-function-to-query-opensearch-domain"></a>
 - Pre-create:
@@ -182,9 +182,9 @@ You need to pay standard AWS data transfer charges for the data transferred in a
 
 </details>
 
-<img src="images/apigw.png" width=1100 />
+<img src="docs/images/apigw.png" width=1100 />
 
-<img src="images/lambda.png" width=1100 />
+<img src="docs/images/lambda.png" width=1100 />
 
 ## 🚀 **Import data for indexing** <a name="Import-data-for-indexing"></a>
 - Retrieve password of `os-master-user` from secret manager for indexing data
@@ -196,13 +196,13 @@ curl -XPOST -u 'os-master-user:naster-password' 'https://search-opensearch-demo-
 - https://opensearch-demo.d6duyoamsniv4.amplifyapp.com/
 
 - Add IAM role of lambda function to Fine-grained access control of opensearch domain
-  <img src="images/swith-os-schema.png" width=1100 />
+  <img src="docs/images/swith-os-schema.png" width=1100 />
 
 - Start `index.html` and then search
 
-<img src="images/search-1.png" width=1100 />
+<img src="docs/images/search-1.png" width=1100 />
 
-<img src="images/search-2.png" width=1100 />
+<img src="docs/images/search-2.png" width=1100 />
 
 ---
 
