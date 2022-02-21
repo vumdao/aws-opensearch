@@ -1,23 +1,32 @@
-import { App, Stack, StackProps } from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-
-export class MyStack extends Stack {
-  constructor(scope: Construct, id: string, props: StackProps = {}) {
-    super(scope, id, props);
-
-    // define resources here...
-  }
-}
-
-// for development, use account/region from cdk cli
-const devEnv = {
-  account: process.env.CDK_DEFAULT_ACCOUNT,
-  region: process.env.CDK_DEFAULT_REGION,
-};
+import { App } from 'aws-cdk-lib';
+import { ApiToLambda } from './apigw-rest';
+import { OpensearchStack } from './opensearch';
+import { CDK_DEFAULT_ACCOUNT, CDK_DEFAULT_REGION } from './shared/configs';
 
 const app = new App();
 
-new MyStack(app, 'my-stack-dev', { env: devEnv });
-// new MyStack(app, 'my-stack-prod', { env: prodEnv });
+const envSet = {
+  region: CDK_DEFAULT_REGION,
+  account: CDK_DEFAULT_ACCOUNT,
+};
+
+const opensearchStack = new OpensearchStack(app, 'OpensearchStack', {
+  description: 'Opensearch Demo',
+  env: envSet,
+  tags: {
+    service: 'opensearch',
+    stage: 'demo',
+  },
+});
+
+const apigwStack = new ApiToLambda(app, 'APIGWLambda', {
+  description: 'API GW to lambda',
+  env: envSet,
+  tags: {
+    service: 'opensearch',
+    stage: 'demo',
+  },
+});
+apigwStack.addDependency(opensearchStack);
 
 app.synth();

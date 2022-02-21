@@ -1,5 +1,5 @@
 {
-  "name": "aws-opensearch",
+  "name": "opensearch",
   "scripts": {
     "build": "npx projen build",
     "bundle": "npx projen bundle",
@@ -7,9 +7,13 @@
     "compile": "npx projen compile",
     "default": "npx projen default",
     "deploy": "npx projen deploy",
+    "deployall": "npx projen deployall",
     "destroy": "npx projen destroy",
+    "destroyall": "npx projen destroyall",
     "diff": "npx projen diff",
+    "eject": "npx projen eject",
     "eslint": "npx projen eslint",
+    "ls": "npx projen ls",
     "package": "npx projen package",
     "post-compile": "npx projen post-compile",
     "post-upgrade": "npx projen post-upgrade",
@@ -29,7 +33,7 @@
     "@types/node": "^12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
-    "aws-cdk": "^2.1.0",
+    "aws-cdk": "^2.13.0",
     "esbuild": "^0.14.23",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.6",
@@ -45,8 +49,14 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "aws-cdk-lib": "^2.1.0",
-    "constructs": "^10.0.5"
+    "@aws-cdk/aws-apigatewayv2-alpha": "^2.13.0-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.13.0-alpha.0",
+    "@aws-cdk/aws-lambda-python-alpha": "^2.13.0-alpha.0",
+    "aws-cdk-lib": "^2.13.0",
+    "constructs": "^10.0.5",
+    "dotenv": "^16.0.0",
+    "env-var": "^7.1.1",
+    "url": "^0.11.0"
   },
   "license": "Apache-2.0",
   "version": "0.0.0",
