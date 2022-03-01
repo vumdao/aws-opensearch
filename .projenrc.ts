@@ -1,6 +1,6 @@
 import { awscdk } from "projen";
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: "2.13.0",
+  cdkVersion: "2.15.0",
   defaultReleaseBranch: "master",
   name: "opensearch",
   projenrcTs: true,
@@ -17,7 +17,7 @@ const dotEnvFile = '.env'
 project.gitignore.addPatterns(dotEnvFile);
 
 // This is used to deploy manually with specific AWS profile
-project.cdkConfig.json.addOverride('profile', 'priv-mfa');
+project.cdkConfig.json.addOverride('profile', 'mfa');
 
 const list = project.addTask("ls");
 list.exec("cdk ls");

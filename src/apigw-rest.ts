@@ -1,19 +1,19 @@
+import { join } from 'path';
 import { HttpApi, HttpMethod, HttpAuthorizer, HttpAuthorizerType, CorsHttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha';
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
+import { PythonFunction } from '@aws-cdk/aws-lambda-python-alpha';
 import { Fn, Stack, StackProps, CfnOutput, Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
-import { join } from 'path';
-import { PythonFunction } from '@aws-cdk/aws-lambda-python-alpha';
 import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
+import { BlockPublicAccess, Bucket, BucketEncryption, EventType } from 'aws-cdk-lib/aws-s3';
+import { LambdaDestination } from 'aws-cdk-lib/aws-s3-notifications';
 import { Construct } from 'constructs';
 import { USER_POOL_APP_CLIENT_ID, USER_POOL_ID } from './shared/configs';
 import { APIGW_ROUTE_PATH, LAMBDA_FUNCTION_NAME, LAMBDA_ROLE_NAME, OPENSEARCH_DOMAIN_ENDPOINT } from './shared/constants';
-import { LambdaDestination } from 'aws-cdk-lib/aws-s3-notifications';
-import { BlockPublicAccess, Bucket, BucketEncryption, EventType } from 'aws-cdk-lib/aws-s3';
 
 
-export class ApiToLambda extends Stack {
+export class ApiGwToLambda extends Stack {
   constructor(scope: Construct, id: string, props: StackProps) {
     super(scope, id, props);
 
@@ -31,7 +31,7 @@ export class ApiToLambda extends Stack {
       role: lambdaRole,
       timeout: Duration.minutes(3),
       environment: {
-          SEARCH_DOMAIN: opensearchDomain
+        SEARCH_DOMAIN: opensearchDomain,
       },
       index: 'app.py',
     });
@@ -45,8 +45,8 @@ export class ApiToLambda extends Stack {
 
     new CfnOutput(this, 'LambdaOsFuncOutput', {
       value: lambdaOs.functionArn,
-      exportName: LAMBDA_FUNCTION_NAME
-    })
+      exportName: LAMBDA_FUNCTION_NAME,
+    });
 
     const apigwv2ToLambda = new HttpApi(this, 'ApiGwToLambda', {
       description: 'Public API for searching an Amazon OpenSearch Service domain',
@@ -82,9 +82,9 @@ export class ApiToLambda extends Stack {
       bucketName: 'opensearch-data-index',
       encryption: BucketEncryption.S3_MANAGED,
       removalPolicy: RemovalPolicy.DESTROY,
-      blockPublicAccess: BlockPublicAccess.BLOCK_ACLS
+      blockPublicAccess: BlockPublicAccess.BLOCK_ACLS,
     });
-    s3DataIndex.addEventNotification(EventType.OBJECT_CREATED_PUT, new LambdaDestination(lambdaOs), {prefix: 'data/', suffix: '.bulk'});
-    s3DataIndex.grantRead(lambdaOs)
+    s3DataIndex.addEventNotification(EventType.OBJECT_CREATED_PUT, new LambdaDestination(lambdaOs), { prefix: 'data/', suffix: '.bulk' });
+    s3DataIndex.grantRead(lambdaOs);
   }
 }

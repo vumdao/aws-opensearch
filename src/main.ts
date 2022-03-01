@@ -1,5 +1,5 @@
 import { App } from 'aws-cdk-lib';
-import { ApiToLambda } from './apigw-rest';
+import { ApiGwToLambda } from './apigw-rest';
 import { OpensearchStack } from './opensearch';
 import { CDK_DEFAULT_ACCOUNT, CDK_DEFAULT_REGION } from './shared/configs';
 
@@ -10,7 +10,7 @@ const envSet = {
   account: CDK_DEFAULT_ACCOUNT,
 };
 
-const opensearchStack = new OpensearchStack(app, 'OpensearchStack', {
+export const opensearchStack = new OpensearchStack(app, 'OpensearchStack', {
   description: 'Opensearch Demo',
   env: envSet,
   tags: {
@@ -19,7 +19,7 @@ const opensearchStack = new OpensearchStack(app, 'OpensearchStack', {
   },
 });
 
-const apigwStack = new ApiToLambda(app, 'APIGWLambda', {
+const apigwStack = new ApiGwToLambda(app, 'APIGWLambda', {
   description: 'API GW to lambda',
   env: envSet,
   tags: {

@@ -37,7 +37,7 @@
 - Use at least three nodes to avoid an unintentionally partitioned network (split brain). If the cluster has 2 only nodes, split-brain happens when there's communication network between them is interrupted. The both nodes think the other down and try to promote itself to become master. When the network communication fix, there're two masters and causes split-brain.
 
 ## 🚀 Fine-grained access control <a name="Fine-grained access control"></a>
-- When enable Fine-grained access control in Amazon OpenSearch Service (not able to disable), following must be et
+- When enable Fine-grained access control in Amazon OpenSearch Service (not able to disable), following must be set
   - Node-to-node encryption
     - It provides an additional layer of security on top of the default features of Amazon OpenSearch Service.
     - Node-to-node encryption enables TLS 1.2 encryption for all communications within the VPC.
@@ -59,7 +59,7 @@ curl -XPUT -u 'os-master-user:HOl0q3$L' 'https://search-opensearch-demo-movie-63
 {"_index":"movies","_type":"_doc","_id":"1","_version":1,"result":"created","_shards":{"total":2,"successful":2,"failed":0},"_seq_no":0,"_primary_term":1}
 ```
 
-- Push bulk data `sample-movies.bulk`
+- Push bulk data [`sample-movies.bulk`](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/samples/sample-movies.zip)
 ```
 curl -XPOST -u 'os-master-user:Q2rmr7hFn@am' 'https://search-opensearch-demo-movie-63wtzcvz3uhgmhotaban5jr6gu.ap-southeast-1.es.amazonaws.com/_bulk' --data-binary @sample-movies.bulk -H 'Content-Type: application/json'
 ```
